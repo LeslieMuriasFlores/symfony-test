@@ -27,6 +27,11 @@ class Empresa
      */
     private $pais;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="empresa")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;

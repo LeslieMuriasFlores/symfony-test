@@ -43,6 +43,16 @@ class User implements UserInterface
     private $pais;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Banco", inversedBy="user")
+     */
+    private $banco;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Empresa", inversedBy="user")
+     */
+    private $empresa;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];

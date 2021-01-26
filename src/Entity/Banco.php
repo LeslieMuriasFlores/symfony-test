@@ -27,6 +27,11 @@ class Banco
      */
     private $pais;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="banco")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
