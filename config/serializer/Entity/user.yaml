@@ -1,7 +1,18 @@
 App\Entity\User:
   attributes:
       id:
-        groups: ['user']
+          groups: ['user']
 
       nombre:
-        groups: ['user'] 
+
+          groups: ['user'] 
+      
+      apellido:
+
+          groups: ['user'] 
+      
+      email:
+        
+          groups: ['user'] 
+      
+        

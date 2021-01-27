@@ -24,14 +24,28 @@ class RegistroUserType extends AbstractType
             ->add('password', PasswordType::class)
             ->add('banco')
             ->add('empresa')
-            ->add('Registrar', SubmitType::class)
+           
         ;
     }
+
+   
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+             //desabilitar token scrf
+            'csrf_protection' => false,
             'data_class' => User::class,
         ]);
+    }
+
+    //dos metodos para que no tengamos que especificar el nombre del form en la creacion del objeto y su registro en bd
+    public function getBlockPrefix()
+    {
+        return '';
+    }
+    public function getName()
+    {
+        return '';
     }
 }

@@ -30,7 +30,7 @@ class UserController extends AbstractController
     /**
      * @Route("/user/list", name="user_list")
      */
-    public function list(UserRepository $userRepository){
+    /*public function list(UserRepository $userRepository){
         $response= new JsonResponse();
         $users= $userRepository->findAll();
         $usersasArray=[];
@@ -47,12 +47,12 @@ class UserController extends AbstractController
         ]);
         return $response;
 
-    }
+    }*/
 
     /**
      * @Route("/user/crear", name="user_crear")
      */
-    public function createUser(Request $request, EntityManagerInterface $em)
+    /*public function createUser(Request $request, EntityManagerInterface $em)
     {
         $user= new User();
         $response=new JsonResponse();
@@ -71,7 +71,7 @@ class UserController extends AbstractController
 
 
         
-        $user->setNombre('ale');
+        /*$user->setNombre('ale');
         $user->setApellido('durand');
         $user->setCedula('252525252525');
         $user->setPassword('123456');
@@ -94,7 +94,7 @@ class UserController extends AbstractController
             ]
         ]);
         return $response;
-    }
+    }*/
 
     
     /**
@@ -107,9 +107,9 @@ class UserController extends AbstractController
           'https://restcountries-v1.p.rapidapi.com/all',
           [
            'headers' => [
-            'x-rapidapi-key' => 'a9081dac8bmsh7ba2557e231a49fp1299c9jsn8345f272d20b',
+           'x-rapidapi-key' => 'a9081dac8bmsh7ba2557e231a49fp1299c9jsn8345f272d20b',
            'x-rapidapi-host' => 'restcountries-v1.p.rapidapi.com',
-            'useQueryString' => 'true',
+           'useQueryString' => 'true',
            ]
           
           ]
