@@ -1,4 +1,4 @@
-App\Entity\user:
+App\Entity\User:
   attributes:
       id:
         groups: ['user']
