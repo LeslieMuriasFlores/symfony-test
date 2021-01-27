@@ -32,6 +32,11 @@ class Empresa
      */
     private $user;
 
+    public function getUser(): ?int
+    {
+        return $this->user;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,4 +65,13 @@ class Empresa
 
         return $this;
     }
+
+    
+    public function setUser(string $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 }

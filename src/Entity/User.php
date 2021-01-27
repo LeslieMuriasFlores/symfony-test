@@ -38,7 +38,7 @@ class User implements UserInterface
      */
     private $cedula;
     /**
-     * @ORM\Column(type="string", length=50, unique=true)
+     * @ORM\Column(type="string", length=50)
      */
     private $pais;
 
@@ -62,6 +62,7 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+    
 
     public function getId(): ?int
     {
@@ -108,6 +109,20 @@ class User implements UserInterface
     public function setPais(string $pais): self
     {
         $this->pais = $pais;
+
+        return $this;
+    }
+
+    public function setBanco(string $banco): self
+    {
+        $this->banco = $banco;
+
+        return $this;
+    }
+
+    public function setEmpresa(string $empresa): self
+    {
+        $this->empresa = $empresa;
 
         return $this;
     }
@@ -173,11 +188,11 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getNombre(): ?int
+    public function getNombre(): ?string
     {
         return $this->nombre;
     }
-    public function getApellido(): ?int
+    public function getApellido(): ?string
     {
         return $this->apellido;
     }
@@ -185,8 +200,16 @@ class User implements UserInterface
     {
         return $this->cedula;
     }
-    public function getPais(): ?int
+    public function getPais(): ?string
     {
         return $this->pais;
+    }
+    public function getBanco(): ?string
+    {
+        return $this->banco;
+    }
+    public function getEmpresa(): ?string
+    {
+        return $this->empresa;
     }
 }
