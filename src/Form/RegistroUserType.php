@@ -21,7 +21,7 @@ class RegistroUserType extends AbstractType
             ->add('cedula')
             ->add('pais')
            // ->add('roles')
-            ->add('password', PasswordType::class)
+            ->add('password')
             ->add('banco')
             ->add('empresa')
            
