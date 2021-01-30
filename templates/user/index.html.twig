@@ -1,12 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Formulario registro{% endblock %}
 
 {% block body %}
 
-    {{form(formulario) }}
+    {{ form_start(formulario_registro) }}
+    {{ form_row(formulario_registro.nombre) }}
+    {{ form_row(formulario_registro.apellido) }}
+    {{ form_row(formulario_registro.email) }}
+    {{ form_row(formulario_registro.cedula) }}
+    {{ form_row(formulario_registro.pais) }}
+    {{ form_row(formulario_registro.password) }}
+    
 
-{% for flash_message in app.session.flashbag.get('notice') %}
+
+    <button type="submit">Registrarse!</button>
+{{ form_end(formulario_registro) }}
+
+{% for flash_message in app.session.flashbag.get('EXITO') %}
     <div class="flash-notice">
         {{ flash_message }}
     </div>

@@ -14,5 +14,9 @@ App\Entity\User:
       email:
         
           groups: ['user'] 
+
+      cedula:
+        
+          groups: ['user']           
       
         

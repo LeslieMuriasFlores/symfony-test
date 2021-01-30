@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class RegistroUserType extends AbstractType
 {
@@ -16,20 +18,24 @@ class RegistroUserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('nombre')
+            ->add('nombre', TextType::class)
             ->add('apellido')
             ->add('cedula')
             ->add('pais')
+            ->add('password', PasswordType::class);
            // ->add('roles')
-            ->add('password')
-            ->add('banco')
-            ->add('empresa')
+            /*->add('password', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'first_options'  => array('label' => 'Password'),
+                'second_options' => array('label' => 'Confirmar Password'),
+            ));*/
+            //->add('banco')
+            //->add('empresa');
            
-        ;
+        
     }
 
    
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

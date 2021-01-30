@@ -29,7 +29,7 @@ class UserController extends AbstractFOSRestController
     /**
      * @Rest\Post(path="/user")
      * @Rest\View(serializerGroups={"user"}, serializerEnableMaxDepthChecks=true) 
-     */
+     */  
     public function postAction(
         UserPasswordEncoderInterface $userPasswordEncoder, 
         EntityManagerInterface $em,
@@ -39,17 +39,12 @@ class UserController extends AbstractFOSRestController
         $form =$this->createForm(RegistroUserType::class, $user);
         $form->handleRequest($request);
         if($form-> isSubmitted()&& $form->isValid()){
-            
             $user->setPassword($userPasswordEncoder->encodePassword($user, $form['password']->getData()));
             $em->persist($user);
             $em->flush();
             return $user;
-
-        }
-        return $form;
-
+        }        
     }
-
 
     /**
      * @Rest\Get(path="/paises")
