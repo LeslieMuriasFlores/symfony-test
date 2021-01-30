@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpClient\HttpClient;
@@ -44,6 +45,14 @@ class UserController extends AbstractController
         return $this->render(
             'user/index.html.twig',
             array('formulario_registro' => $form->createView()));
+    }
+
+    /**
+     * @Route("/verificar_user", name="usuario_registrado")
+     */
+    public function obtenerRole()
+    {
+        return $this->render('usuario.html.twig');    
     }
 
 }
