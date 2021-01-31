@@ -36,7 +36,7 @@ class UserController extends AbstractFOSRestController
         Request $request
     ){
         $user = new User();
-        $form =$this->createForm(RegistroUserType::class, $user);
+        $form =$this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if($form-> isSubmitted()&& $form->isValid()){
             $user->setPassword($userPasswordEncoder->encodePassword($user, $form['password']->getData()));

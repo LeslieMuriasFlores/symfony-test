@@ -1,26 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Formulario registro{% endblock %}
+{% block title %}User index{% endblock %}
 
 {% block body %}
+    <h1>User index</h1>
 
-    {{ form_start(formulario_registro) }}
-    {{ form_row(formulario_registro.nombre) }}
-    {{ form_row(formulario_registro.apellido) }}
-    {{ form_row(formulario_registro.email) }}
-    {{ form_row(formulario_registro.cedula) }}
-    {{ form_row(formulario_registro.pais) }}
-    {{ form_row(formulario_registro.password) }}
-    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cedula</th>
+                <th>Pais</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.nombre }}</td>
+                <td>{{ user.apellido }}</td>
+                <td>{{ user.cedula }}</td>
+                <td>{{ user.pais }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.password }}</td>
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-
-    <button type="submit">Registrarse!</button>
-{{ form_end(formulario_registro) }}
-
-{% for flash_message in app.session.flashbag.get('EXITO') %}
-    <div class="flash-notice">
-        {{ flash_message }}
-    </div>
-{% endfor %}
-
+    <a href="{{ path('user_new') }}">Create new</a>
 {% endblock %}

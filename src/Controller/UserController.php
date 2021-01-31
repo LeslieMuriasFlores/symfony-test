@@ -2,57 +2,98 @@
 
 namespace App\Controller;
 
-use App\Form\RegistroUserType;
+use App\Entity\User;
+use App\Form\UserType;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\User;
-use App\Repository\UserRepository;
-use App\Security\LoginFormAuthenticator;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-
-
+/**
+ * @Route("/user")
+ */
 class UserController extends AbstractController
 {
+    /**
+     * @Route("/", name="user_index", methods={"GET"})
+     */
+    public function index(UserRepository $userRepository): Response
+    {
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findAll(),
+        ]);
+    }
 
     /**
-     * @Route("/registro", name="registrar_user")
+     * @Route("/nuevo_usuario", name="user_new", methods={"GET","POST"})
      */
-    public function index(
-        UserPasswordEncoderInterface $userPasswordEncoder, 
-        EntityManagerInterface $em,
-        Request $request
-    )
+    public function new(Request $request,
+    UserPasswordEncoderInterface $userPasswordEncoder, 
+    EntityManagerInterface $em
+    ): Response
     {
         $user = new User();
-        $form =$this->createForm(RegistroUserType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        if($form-> isSubmitted()&& $form->isValid()){
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($userPasswordEncoder->encodePassword($user, $form['password']->getData()));
             $em->persist($user);
             $em->flush();
             $this->addFlash('EXITO','Se ha registrado correctamente');
-            return $this->redirectToRoute('registrar_user');
+            return $this->redirectToRoute('user_index');
         }
 
-        return $this->render(
-            'user/index.html.twig',
-            array('formulario_registro' => $form->createView()));
+        return $this->render('user/new.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route("/verificar_user", name="usuario_registrado")
+     * @Route("/{id}", name="user_show", methods={"GET"})
      */
-    public function obtenerRole()
+    public function show(User $user): Response
     {
-        return $this->render('usuario.html.twig');    
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+        ]);
     }
 
+    /**
+     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, User $user): Response
+    {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('user_index');
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, User $user): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('user_index');
+    }
 }

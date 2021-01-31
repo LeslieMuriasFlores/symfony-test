@@ -7,6 +7,15 @@
             Bienvenido {{ app.user.username }}, <a href="{{ path('app_logout') }}">Salir</a>
         </div>
     {% endif %}
-
+    
+     <div class="mb-3">
+    Nombre: {{ app.user.nombre }}<br>
+    Apellido: {{ app.user.apellido }}<br>
+    Cedula: {{ app.user.cedula }}<br>
+    País: {{ app.user.pais }}<br><br>
+    </div>
+    <form action="">
+    <button>Editar perfil</button>
+    </form>
 
 {% endblock %}
