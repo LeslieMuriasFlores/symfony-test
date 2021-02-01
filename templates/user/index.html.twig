@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Usuarios{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
-
+{% if is_granted('ROLE_ADMIN') %}
+    <h1>Listado usuarios registrados</h1>
+    Bienvenido, {{ app.user.nombre }},{{ app.user.roles ? app.user.roles|json_encode : '' }} <a href="{{ path('app_logout') }}">Salir</a><br>
     <table class="table">
         <thead>
             <tr>
@@ -44,4 +45,38 @@
     </table>
 
     <a href="{{ path('user_new') }}">Create new</a>
+       
+{% endif %}
+{% if is_granted('ROLE_USER') %}
+<h1>Usuario</h1>
+ Bienvenido, {{ app.user.nombre }},{{ app.user.roles ? app.user.roles|json_encode : '' }} <a href="{{ path('app_logout') }}">Salir</a><br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cedula</th>
+                <th>Pais</th>
+                <th>Roles</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ app.user.id }}</td>
+                <td>{{ app.user.email }}</td>
+                <td>{{ app.user.nombre }}</td>
+                <td>{{ app.user.apellido }}</td>
+                <td>{{ app.user.cedula }}</td>
+                <td>{{ app.user.pais }}</td>
+                <td>{{ app.user.roles ? app.user.roles|json_encode : '' }}</td>
+                <td>
+                    <a href="{{ path('user_edit', {'id': app.user.id}) }}">Editar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endif %}
 {% endblock %}
